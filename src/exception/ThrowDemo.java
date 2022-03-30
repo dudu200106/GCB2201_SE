@@ -7,7 +7,7 @@ package exception;
  * 2.程序可以运行, 但是不满足业务场景时, 可以当做异常抛出去
  */
 public class ThrowDemo {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         System.out.println("程序开始execute");
 
         Person p=new Person(0);
@@ -22,7 +22,7 @@ public class ThrowDemo {
             * 2.使用throws继续讲这个异常声明抛出
             * */
             p.setAge(1003);
-        } catch (Exception e) {
+        } catch (IllegalAgeException e) {
             e.printStackTrace();
         }
 
