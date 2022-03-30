@@ -7,6 +7,7 @@ public class Person {
         this.age = age;
     }
 
+
     public void setAge(int age) throws Exception {
         if (age>100||age<0)
 //            throw new RuntimeException("n年龄不合法");
