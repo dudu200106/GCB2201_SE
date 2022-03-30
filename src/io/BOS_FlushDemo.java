@@ -14,6 +14,7 @@ import java.nio.charset.StandardCharsets;
  * flush是在OutStream超类上定义的
  */
 public class BOS_FlushDemo {
+
     public static void main(String[] args) throws IOException {
 
         FileOutputStream fos=new FileOutputStream("bos.txt");
@@ -24,6 +25,8 @@ public class BOS_FlushDemo {
         bos.write(data);
         System.out.println("Over");
         //强制将缓冲区的数据立即读写出去
+        //具体使用flush要根据实际需要,
+        // 若是要立刻的实时写出效果就调用, 若要追求效率就不要频繁使用flush
         bos.flush();
 
         bos.close();

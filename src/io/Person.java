@@ -36,6 +36,11 @@ public class Person implements Serializable {
         this.otherInfo = otherInfo;
     }
 
+    {
+        System.out.println("2222222222");
+    }
+
+
     @Override
     public String toString() {
         return "Person{" +
