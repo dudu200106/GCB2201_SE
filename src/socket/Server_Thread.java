@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
+import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * 聊天室服务端_多线程
@@ -25,7 +26,6 @@ public class Server_Thread {
     /*构造方法*/
     public Server_Thread() {
         try {
-
             System.out.println("正在启动服务端...");
             serverSocket = new ServerSocket(8088);
             System.out.println("服务端启动完毕!");
@@ -41,10 +41,10 @@ public class Server_Thread {
                 System.out.println("等待客户端连接");
                 Socket socket = serverSocket.accept();
                 System.out.println("一个客户端已连接");
-                MySocketTask ms= new MySocketTask(socket);
-                Thread t =new Thread(ms);
-                t.start();
-
+                //启动一个线程处理该客户端的处理
+                ClientHandle clientHandle =new ClientHandle(socket);
+                Thread thread =new Thread(clientHandle);
+                thread.start();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -57,30 +57,33 @@ public class Server_Thread {
         server.start();
     }
 
-}
+    private class ClientHandle implements Runnable{
+        private Socket socket;
 
-class MySocketTask implements Runnable{
-    private Socket socket;
+        public ClientHandle(Socket socket) {
+            this.socket = socket;
+        }
 
-    public MySocketTask(Socket socket) {
-        this.socket = socket;
-    }
+        @Override
+        public void run() {
+            try {
+                //通过socket获取输入流读取对方发送过来的消息
+                InputStream in = socket.getInputStream();
+                InputStreamReader isr = new InputStreamReader(in, StandardCharsets.UTF_8);
+                BufferedReader br = new BufferedReader(isr);
 
-    @Override
-    public void run() {
-        try {
-            //通过socket获取输入流读取对方发送过来的消息
-            InputStream in = socket.getInputStream();
-            InputStreamReader isr = new InputStreamReader(in, StandardCharsets.UTF_8);
-            BufferedReader br = new BufferedReader(isr);
+                String line;
+                while ((line = br.readLine()) != null) {
+                    System.out.println("客户端说:" + line);
+                }
 
-            String line;
-            while ((line = br.readLine()) != null) {
-                System.out.println("客户端说:" + line);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
+
 }
+
+
+
