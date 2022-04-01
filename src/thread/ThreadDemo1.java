@@ -17,6 +17,8 @@ public class ThreadDemo1{
     public static void main(String[] args) {
         MyThread1 mt1=new MyThread1();
         MyThread2 mt2=new MyThread2();
+        //调用start()之后, 线程就被扔进线程调度器了,
+        // 由调度器分配时间片执行线程,不用等该线程执行完成出栈,直接下一条语句
         mt1.start();
         mt2.start();
     }
