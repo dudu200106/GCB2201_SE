@@ -1,5 +1,10 @@
 package thread;
 
+/**
+ * sleep阻塞
+ * 线程提供了一个静态方法sleep，可以使运行该方法的线程阻塞指定毫秒。超时后线程会自动回到
+ * RUNNABLE状态继续并发运行
+ */
 public class SleepDemo {
     public static void main(String[] args) {
         System.out.println("程序开始了");
