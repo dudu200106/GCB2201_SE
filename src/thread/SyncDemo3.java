@@ -1,5 +1,12 @@
 package thread;
 
+/**
+ * 静态方法上如果使用synchronized，那么该方法一定是同步的。
+ *
+ * 静态方法上指定的锁对象为当前类的类对象，即Class类的实例。
+ * 在JVM中每个被加载的类都有且只有一个Class的实例与之对应，它称为一个类的类对象。
+ *
+ */
 public class SyncDemo3 {
     public static void main(String[] args) {
         Boo b1=new Boo();
@@ -23,7 +30,8 @@ public class SyncDemo3 {
 
 class Boo{
    /*
-   * 静态方法使用synchronized锁定的是类的类对象, 每个类都只有一个class类对象--Boo.class
+   * 静态方法使用synchronized锁定的是类的类对象,即Class类的实例
+   *  JVM中的每个被加载的类,都有一个Class类的实例对象与之对应--Boo.class
    * */
 //    public synchronized static void dosome(){
     public static void dosome(){
