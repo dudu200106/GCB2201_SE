@@ -22,7 +22,8 @@ public class Server_Thread {
      */
     private ServerSocket serverSocket;
 
-    public Server_Thread(){
+    /*构造方法*/
+    public Server_Thread() {
         try {
 
             System.out.println("正在启动服务端...");
@@ -39,31 +40,29 @@ public class Server_Thread {
             try {
                 System.out.println("等待客户端连接");
                 Socket socket = serverSocket.accept();
-                System.out.println("一个客户端连接了!");
-
-                MySocket mySocket = new MySocket(socket);
-                Thread mt=new Thread(mySocket);
-                mt.start();
+                System.out.println("一个客户端已连接");
+                MySocketTask ms= new MySocketTask(socket);
+                Thread t =new Thread(ms);
+                t.start();
 
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
-
         }
     }
 
     public static void main(String[] args) {
-        Server server = new Server();
+        Server_Thread server = new Server_Thread();
         server.start();
     }
 
 }
 
-class MySocket implements Runnable{
+class MySocketTask implements Runnable{
     private Socket socket;
 
-    public MySocket(Socket socket) {
+    public MySocketTask(Socket socket) {
         this.socket = socket;
     }
 
